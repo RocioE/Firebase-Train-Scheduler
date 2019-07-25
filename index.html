@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset ="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Train Schedule </title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel ="stylesheet" type="text/css" href="css/style.css"> 
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+  <script type="text/javascript" src="assets/app.js"></script>
+
+  <!-- Firebase -->
+ <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+
+<!-- Moment.js -->
+<script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+
+</head>
+<body>
+<!--Train schedule div-->
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1>Solid Gold Train Express Schedule</h1>
+    <p>Always on Time!</p>
+  </div> <!-- close jumbotron container -->
+
+  <div class="panel panel-success"> <!--this is Bootstrap Success predefined alert, green for current train -->
+    <div class="panel-heading">
+      <h3 class="panel-title">Current Train Schedule</h3>
+  </div>
+
+
+    <div class="panel-body" id="train-info">  <!--creates the panel that holds the table-->
+      <table class="table">
+        <thead> <!--<thread> tag helps group header with HTML-->
+          <tr>
+            <th>Train Name</th>
+            <th>Destination</th>
+            <th>Frequency (min)</th>
+            <th>Next Arrival</th>
+            <th>Minutes Away</th>
+          </tr>
+        </thead>
+        <tbody id="table"></tbody>
+      </table>
+   
+    </div>
+  </div> 
+
+  <div class="panel-body"> <!--use "form-group" for each train name, destination, frequency, next arrival, Min away-->
+    <form>
+    <div class="form-group">
+      <label for="input-panel">Train Name</label>
+      <input type="text" class="form-control" id="train-input" >
+    </div>
+
+    <div class="form-group">
+        <label for="startDateInput">Destination</label>
+        <input type="text" class="form-control" id="destination-input">
+      </div>
+
+      <!-- <div class="form-group">
+        <label for="startDateInput">Frequency</label>
+        <input type="text" class="form-control" id="destination-input">
+      </div> find frequency and insert in <label for= ""!!!-->
+
+        <!-- <div class="form-group">
+        <label for="startDateInput">Next Arrival</label>
+        <input type="text" class="form-control" id="destination-input">
+      </div> find frequency and insert in <label for= ""!!!-->
+
+        <!-- <div class="form-group">
+        <label for="startDateInput">Minutes Away</label>
+        <input type="text" class="form-control" id="destination-input">
+      </div> find frequency and insert in <label for= ""!!!-->
+
+        </form>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Javascript this goes at the end-->
+<script src='javascript/trainapp.js'></script>
+<script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
+</body>
+
+</body>
+</html>

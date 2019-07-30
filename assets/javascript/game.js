@@ -26,7 +26,7 @@ $(document).ready(function () {
   //Logging the current time
   console.log("Current Time: " + currentTime);
 
-  //When the SUBMIT button is clicked, the snapshot function below will run. 
+  //When the SUBMIT button is clicked, then snapshot function below will run//
   $("#submit").on("click", function () {
     event.preventDefault()
 
@@ -55,11 +55,12 @@ $(document).ready(function () {
   database.ref().on("child_added", function (snapshot) {
     //var child = snapshot.val().frequency;
     //console.log(child);
-      ///NOW is in REAL time//
+
+      ///format moment js NOW is in REAL time, need variables for NOW//
     var nowTimeAll = moment().format('HH:mm')
     var nowTimeH = moment().format('HH')
     var nowTimeM = moment().format('mm')
-    //////////////Saved time////////   
+    //saves time// 
     var startTime = snapshot.val().firstTrainTime
     var frequencyTime = snapshot.val().frequency
 
@@ -68,12 +69,11 @@ $(document).ready(function () {
     var startTimeHours = momentStartTimeObj.format('HH')
     var startTimeMinutes = momentStartTimeObj.format('mm')
     
-    var hoursAway =moment(startTime,"hours").diff(moment(nowTimeAll,"hours"),"hours")
+    var hoursAway =moment(startTime,"hours").diff(moment(nowTimeAll,"hours"),"hours") //calculates min/time, doing 60mins for 1hr
     var minutesAway =moment(startTime,":minutes").diff(moment(nowTimeAll,":minutes"),"minutes")
      //console.log(hoursAway)
     if(hoursAway>0 )
      {
-         
          var now= startTime
          nowHour = moment(now, 'hh:mm').format('hh')
          convertNowHourToMinutes = nowHour*60

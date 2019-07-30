@@ -1,12 +1,9 @@
 $(document).ready(function () {
-
+ // Create a variable to reference the database
   var trainName = "";
   var destination = "";
+  var firstTrainTime= 0;
   var frequency = 0;
-  var nextArrival = 0;
-  var minsAway = 0;
-
-  // Create a variable to reference the database
 
   var firebaseConfig = {
     apiKey: "AIzaSyDEi_Kxrn1bvpxBCaRiDltzKJyL9mVg5mY",
@@ -17,6 +14,7 @@ $(document).ready(function () {
     messagingSenderId: "3759285447",
     appId: "1:3759285447:web:77f160a94d2a8464"
   };
+
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 
@@ -28,64 +26,84 @@ $(document).ready(function () {
   //Logging the current time
   console.log("Current Time: " + currentTime);
 
-  //When the button is clicked, the snapshot function below will run. 
+  //When the SUBMIT button is clicked, the snapshot function below will run. 
   $("#submit").on("click", function () {
     event.preventDefault()
 
+    //.val().trim(); returns a string into each text box//
     trainName = $("#trainName-input").val().trim();
     destination = $("#destination-input").val().trim();
-    frequency = $("#frequency-input").val().trim();
-    nextArrival = $("#nextArrival-input").val().trim();
-    minsAway = $("#minsaway-input").val().trim();
+    firstTrainTime = $("#firstTrainTime-input").val().trim();
+    frequency = $("#nextArrival-input").val().trim();
 
-    // Code for handling the push
+    // Code for handling the push into firebase,//
     database.ref().push({
       trainName: trainName,
       destination: destination,
+      firstTrainTime: firstTrainTime,
       frequency: frequency,
-      nextArrival: nextArrival,
-      minsAway: minsAway,
-      dateAdded: firebase.database.ServerValue.TIMESTAMP
+     // dateAdded: firebase.database.ServerValue.TIMESTAMP
     });
 
     // Firebase watcher .on("child_added" specific location in your Database You can reference the root or child location in your Database by calling it//
-    database.ref().on("child_added", function (snapshot) {
-      var child = snapshot.val();
-      console.log(child);
-
-      // Log everything that's coming out of snapshot
-      console.log(snapshot.val().trainName);
-      console.log(snapshot.val().destinatiion);
-      console.log(snapshot.val().frequency);
-      console.log(snapshot.val().nextArrival);
-      console.log(snapshot.val().minsAway);
-
-      // Change the HTML to reflect
-      $("#trainName-display").text(snapshot.val().trainName);
-      $("#destination-display").text(snapshot.val().destinatiion);
-      $("#frequency-display").text(snapshot.val().frequency);
-      $("#nextArrival-display").text(snapshot.val().nextArrival);
-      $("#minsAway-display").text(snapshot.val().minsAway);
-
-
-      // var table = $("<tr class = 'table'>");
-      $("#table").append(table);
-      table.append("<td>" + child.dataTrainName + "</td>");
-      table.append("<td>" + child.dataDestination + "</td>");
-      table.append("<td>" + child.dataFrequency + "</td>");
-      table.append("<td>" + child.dataNextArrival + "</td>");
-      table.append("<td>" + child.dataMinsAway + "</td>");
-
-
-      // Handle the errors
-    }, function (errorObject) {
-      console.log("Errors handled: " + errorObject.code);
-    });////
+    
 
   })
 
   // Grabbed values from text boxes//
 
+  database.ref().on("child_added", function (snapshot) {
+    //var child = snapshot.val().frequency;
+    //console.log(child);
+      
+    var nowTimeAll = moment().format('HH:mm')
+    var nowTimeH = moment().format('HH')
+    var nowTimeM = moment().format('mm')
+    //////////////Saved time////////   
+    var startTime = snapshot.val().firstTrainTime
+    var frequencyTime = snapshot.val().frequency
 
+   
+    var momentStartTimeObj = moment(startTime, 'HH:mm')
+    var startTimeHours = momentStartTimeObj.format('HH')
+    var startTimeMinutes = momentStartTimeObj.format('mm')
+    
+    var hoursAway =moment(startTime,"hours").diff(moment(nowTimeAll,"hours"),"hours")
+    var minutesAway =moment(startTime,":minutes").diff(moment(nowTimeAll,":minutes"),"minutes")
+     //console.log(hoursAway)
+    if(hoursAway>0 )
+     {
+         
+         var now= startTime
+         nowHour = moment(now, 'hh:mm').format('hh')
+         convertNowHourToMinutes = nowHour*60
+         nowMinute =  moment(now, 'hh:mm').format('mm')
+         var minutesAway = convertNowHourToMinutes+nowMinute
+     }
+     else{
+         var now= moment(nowTimeAll, "HH:mm").add(frequencyTime, "minutes").format('HH:mm')
+         nowHour = moment(now, 'hh:mm').format('hh')
+         convertNowHourToMinutes = nowHour*60
+         nowMinute =  moment(now, 'hh:mm').format('mm')
+         var minutesAway = convertNowHourToMinutes+nowMinute
+     }
+
+    var tableResult =  $("<tr>").append(
+      $("<td>").text(snapshot.val().trainName),
+      $("<td>").text(snapshot.val().destination),
+      $("<td>").text(snapshot.val().frequency),
+      $("<td>").text(now),
+      $("<td>").text(minutesAway)
+
+    )
+   
+    $(".table tbody").append(tableResult);
+   
+
+
+    // Handle the errors
+  }, function (errorObject) {
+    console.log("Errors handled: " + errorObject.code);
+  });////
 
 })

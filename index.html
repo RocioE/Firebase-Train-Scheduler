@@ -13,6 +13,13 @@
 <!-- Moment.js -->
 <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 
+<style>
+.container {
+  background: rgb(247, 247, 80);
+
+}
+
+</style>
 
 </head>
 <body>
@@ -22,7 +29,7 @@
   <div class="container">
     <h1>Solid Gold Train Express Schedule</h1>
     <p>Always on Time!</p>
-  </div> <!-- close jumbotron container -->
+  
 
   <div class="panel panel-success"> <!--this is Bootstrap Success predefined alert, green for current train -->
     <div class="panel-heading">
@@ -36,18 +43,19 @@
           <tr>
             <th>Train Name</th>
             <th>Destination</th>
-            <th>Frequency (min)</th>
+            <th>Frequency</th>
             <th>Next Arrival</th>
             <th>Minutes Away</th>
           </tr>
         </thead>
-        <tbody id="table"></tbody>
-      </table>
-   
-    </div>
-  </div> 
+        <tbody>     <!-- Below Insert data the user inputs into firebase -->
+        </tbody>
+    </table>
+  </div>
 
-  <div class="panel-body"> <!--use "form-group" for each train name, destination, frequency, next arrival, Min away-->
+  
+
+  <div class="panel-body"> <!--use "form-group" for train name, destination, first train, frequency-->
     <form>
     <div class="form-group">
       <label for="trainName-panel">Train Name</label>
@@ -60,49 +68,28 @@
       </div>
 
       <div class="form-group">
-        <label for="frequency">Frequency</label>
-        <input type="text" class="form-control" id="frequency-input">
+        <label for="firstTrainTime">First Train Time</label>
+        <input type="time" class="form-control" id="firstTrainTime-input">
       </div>  
 
       <div class="form-group">
-        <label for="nextArrival">Next Arrival</label>
+        <label for="frequency">Frequency</label>
         <input type="text" class="form-control" id="nextArrival-input">
       </div> 
 
-      <div class="form-group">
-        <label for="minutesAway">Minutes Away</label>
-        <input type="text" class="form-control" id="minsaway-input">
-      </div> 
+          <button type="submit" class="btn btn-default" id="submit">Submit</button>
 
-            <button type="submit" class="btn btn-default" id="submit">Submit</button>
-
-        </form>
+    </form>
     </div>
-  </div>
-
-
-
-
-
-
+  </div> <!-- jumbotron fluid container closes here -->
 
 
     <!-- Javascript this goes at the end-->
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
     <script src="./assets/javascript/game.js"></script>
-
-        <!-- <script src="assets/javascript/RocioE/Firebase-Train-Scheduler.js"></script> -->
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#config-web-app -->
-
-<script>
-  // Your web app's Firebase configuration
-  
-</script>
+ 
 
 </body>
 
-</body>
 </html>

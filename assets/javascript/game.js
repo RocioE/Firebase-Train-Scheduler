@@ -55,7 +55,7 @@ $(document).ready(function () {
   database.ref().on("child_added", function (snapshot) {
     //var child = snapshot.val().frequency;
     //console.log(child);
-      
+      ///NOW is in REAL time//
     var nowTimeAll = moment().format('HH:mm')
     var nowTimeH = moment().format('HH')
     var nowTimeM = moment().format('mm')

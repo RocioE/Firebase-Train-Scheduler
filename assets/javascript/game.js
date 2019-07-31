@@ -1,11 +1,11 @@
-$(document).ready(function () {
+$(document).ready(function () {  //MUST have ready function first to start//
  // Create a variable to reference the database
   var trainName = "";
   var destination = "";
   var firstTrainTime= 0;
   var frequency = 0;
 
-  var firebaseConfig = {
+  var firebaseConfig = {//api key databas, all below retrieved from firebase//
     apiKey: "AIzaSyDEi_Kxrn1bvpxBCaRiDltzKJyL9mVg5mY",
     authDomain: "fir-train-scheduler-c6205.firebaseapp.com",
     databaseURL: "https://fir-train-scheduler-c6205.firebaseio.com",
@@ -15,7 +15,7 @@ $(document).ready(function () {
     appId: "1:3759285447:web:77f160a94d2a8464"
   };
 
-  // Initialize Firebase
+  // Initialize Firebase//
   firebase.initializeApp(firebaseConfig);
 
   //Declaring the current REAL time//
@@ -23,7 +23,7 @@ $(document).ready(function () {
   var database = firebase.database();
 
 
-  //Logging the current time
+  //Logging the current time in REAL time//
   console.log("Current Time: " + currentTime);
 
   //When the SUBMIT button is clicked, then snapshot function below will run//
@@ -56,7 +56,8 @@ $(document).ready(function () {
     //var child = snapshot.val().frequency;
     //console.log(child);
 
-      ///format moment js NOW is in REAL time, need variables for NOW//
+      ///format moment js NOW is in REAL time, need variables for NOW.
+      //Used by Moment.js and date-fns/format. Similar to Java SimpleDateFormat. using time as hh:mm //
     var nowTimeAll = moment().format('HH:mm')
     var nowTimeH = moment().format('HH')
     var nowTimeM = moment().format('mm')
@@ -76,7 +77,7 @@ $(document).ready(function () {
      {
          var now= startTime
          nowHour = moment(now, 'hh:mm').format('hh')
-         convertNowHourToMinutes = nowHour*60
+         convertNowHourToMinutes = nowHour*60  //when user inputs mins it will convert hr to mins dif from now//
          nowMinute =  moment(now, 'hh:mm').format('mm')
          var minutesAway = convertNowHourToMinutes+nowMinute
      }
@@ -87,7 +88,7 @@ $(document).ready(function () {
          nowMinute =  moment(now, 'hh:mm').format('mm')
          var minutesAway = convertNowHourToMinutes+nowMinute
      }
-
+//must APPEND each <td>
     var tableResult =  $("<tr>").append(
       $("<td>").text(snapshot.val().trainName),
       $("<td>").text(snapshot.val().destination),
